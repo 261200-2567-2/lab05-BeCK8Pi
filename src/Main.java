@@ -5,7 +5,7 @@ import MyRPG.*;
 public class Main {
     public static void main(String[] args) {
         Mage a = new Mage("a");
-        Mage b = new Mage("b");
+        Ranger b = new Ranger("b");
         Equipment a1 = new Ring();
         Equipment a2 = new BasicStaff();
         Equipment a3 = new LightArmor();
@@ -16,11 +16,12 @@ public class Main {
         a.equip(a2);
         a.equip(a3);
         a.seeStats();
-        Equipment b1 = new BasicStaff();
+        Equipment b1 = new BasicBow();
         Equipment b2 = new Necklace();
-        Equipment b3 = new LightArmor();
+        Equipment b3 = new HeavyArmor();
         b.equip(b1);
         b.equip(b2);
+        b1.levelUp();
         b.equip(b3);
         b.seeStats();
         //Equipment[] d = new Equipment[6];

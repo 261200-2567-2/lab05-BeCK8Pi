@@ -27,21 +27,21 @@ public abstract class RPGCharacter implements RPGCharacterInterface {
     private Armor armor;
     private int accessoriesCount  = 0, accessoryMax = 5;
     private Accessory[] accessories = new Accessory[accessoryMax];
-    protected RPGCharacter(String name, double hp, double mana, double pAtk, double mAtk, double pDef, double mDef, double spd, double hpGrowth, double pAtkGrowth, double mAtkGrowth, double blockDamage, int cd1, int cd2) {
+    protected RPGCharacter(String name, double[] stats, int cd1, int cd2) {
         this.name = name;
         level = 0;
-        this.hp = maxHp = hp;
-        maxMana = mana;
+        this.hp = maxHp = stats[0];
+        maxMana = stats[1];
         this.mana = 0;
-        this.pAtk = basePAtk =  pAtk;
-        this.mAtk = baseMAtk = mAtk;
-        this.pDef = basePDef = pDef;
-        this.mDef = baseMDef = mDef;
-        this.spd = baseSpd = spd;
-        this.hpGrowth = hpGrowth;
-        this.pAtkGrowth = pAtkGrowth;
-        this.mAtkGrowth = mAtkGrowth;
-        this.blockDamage = blockDamage;
+        this.pAtk = basePAtk = stats[2];
+        this.mAtk = baseMAtk = stats[3];
+        this.pDef = basePDef = stats[4];
+        this.mDef = baseMDef = stats[5];
+        this.spd = baseSpd = stats[6];
+        this.hpGrowth = stats[7];
+        this.pAtkGrowth = stats[8];
+        this.mAtkGrowth = stats[9];
+        this.blockDamage = stats[10];
         manaRegen = baseManaRegen = 10;
         manaReturn = baseManaReturn = 0;
         criChance = baseCriChance = 5;
@@ -282,7 +282,7 @@ public abstract class RPGCharacter implements RPGCharacterInterface {
             baseManaReturn  += equipment.stat[1] * multiplier;
             baseSpd += equipment.stat[2] * multiplier;
         }
-        spd -= multiplier*baseSpd*equipment.weight/100;
+        baseSpd -= multiplier*equipment.weight/5;
         resetBuff();
     }
     protected void shoutSkillName(String skillName){
@@ -311,7 +311,7 @@ public abstract class RPGCharacter implements RPGCharacterInterface {
 
 abstract class PhysicalClass extends RPGCharacter{
     PhysicalClass(String name, double hp, double mana, double pAtk, double mAtk, double pDef, double mDef, double spd, double hpGrowth, double pAtkGrowth, double mAtkGrowth, double blockDamage, int cd1, int cd2){
-        super(name, hp, mana, pAtk, mAtk, pDef,mDef,spd,hpGrowth,pAtkGrowth,mAtkGrowth,blockDamage,cd1,cd2);
+        super(name, new double[]{hp, mana, pAtk, mAtk, pDef,mDef,spd,hpGrowth,pAtkGrowth,mAtkGrowth,blockDamage},cd1,cd2);
     }
     @Override
     public void attack(RPGCharacter target){
@@ -322,7 +322,7 @@ abstract class PhysicalClass extends RPGCharacter{
 
 abstract class MagicalClass extends RPGCharacter{
     MagicalClass(String name, double hp, double mana, double pAtk, double mAtk, double pDef, double mDef, double spd, double hpGrowth, double pAtkGrowth, double mAtkGrowth, double blockDamage, int cd1, int cd2){
-        super(name, hp, mana, pAtk, mAtk, pDef,mDef,spd,hpGrowth,pAtkGrowth,mAtkGrowth,blockDamage,cd1,cd2);
+        super(name, new double[]{hp, mana, pAtk, mAtk, pDef,mDef,spd,hpGrowth,pAtkGrowth,mAtkGrowth,blockDamage},cd1,cd2);
     }
     @Override
     public void attack(RPGCharacter target){

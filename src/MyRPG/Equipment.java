@@ -14,7 +14,7 @@ public class Equipment implements EquipmentInterface {
     protected double[] baseStat = new double[maxStatCount];
     protected double[] stat = new double[maxStatCount];
     protected RPGCharacter master;
-    public Equipment(){}
+    //public Equipment(){}
     protected Equipment(String name, double[] stat, double weight){
         this.name = name;
         level = 0;
@@ -42,8 +42,11 @@ public class Equipment implements EquipmentInterface {
             System.out.println("This equipment is at max level");
             return;
         }
+        RPGCharacter wearer = master;
+        if(wearer!=null) wearer.unequip(this);
         level++;
         for(int i=0;i<statName.length;i++){ stat[i] += baseStat[i]*0.2; }
+        if(wearer!=null) wearer.equip(this);
     }
 }
 
