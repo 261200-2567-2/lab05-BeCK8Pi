@@ -11,6 +11,8 @@ interface RPGCharacterInterface {
     public void giveFirstAid(RPGCharacter target);
     public void equip(Equipment equipment);
     public void unequip(Equipment equipment);
+
+    public void fightTillDeath(RPGCharacter opponent);//joke method don't use
 }
 
 public abstract class RPGCharacter implements RPGCharacterInterface {
@@ -298,6 +300,12 @@ public abstract class RPGCharacter implements RPGCharacterInterface {
     }
     protected void reduceCd2(){
         cd2 = Math.max(0, cd2-1);
+    }
+    public void fightTillDeath(RPGCharacter opponent){
+        while(this.isAlive&&opponent.isAlive){
+            this.attack(opponent);
+            opponent.attack(this);
+        }
     }
 }
 
